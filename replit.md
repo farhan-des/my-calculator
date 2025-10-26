@@ -1,8 +1,8 @@
-# Playback Speed Calculator
+# Calculator Tools Website
 
 ## Overview
 
-This is a utility-focused web application that calculates video and podcast duration at different playback speeds. Users can input a media duration (hours, minutes, seconds) and a playback speed multiplier to see the adjusted time and time saved/lost. The application is built as a single-page calculator with examples and instructional content, emphasizing clarity and ease of use.
+This is a multi-tool calculator website featuring various utility calculators and tools. The site has a clean homepage that automatically displays all available calculators, making it easy to add new tools. Currently includes a playback speed calculator with more tools easily added through the tools registry system. The application emphasizes clarity, ease of use, and mobile-friendly responsive design.
 
 ## User Preferences
 
@@ -14,7 +14,12 @@ Preferred communication style: Simple, everyday language.
 
 **Framework**: React 18+ with TypeScript using Vite as the build tool and development server.
 
-**Routing**: Wouter for lightweight client-side routing. The application has a minimal route structure with a home page and a 404 fallback.
+**Routing**: Wouter for lightweight client-side routing. The application has:
+- Homepage (`/`) - displays all available calculators from the tools registry
+- Individual tool pages (e.g., `/playback-speed-calculator`)
+- 404 fallback for unknown routes
+
+**Tools Registry System**: A centralized registry (`shared/toolsRegistry.ts`) that automatically populates the homepage with available tools. Adding a new tool only requires adding an entry to this registry, and it will automatically appear on the homepage with proper categorization.
 
 **UI Component Library**: Shadcn UI with Radix UI primitives. The design system follows the "new-york" style variant with a neutral base color scheme. Components are built with class-variance-authority for variant management and Tailwind CSS for styling.
 
@@ -23,6 +28,10 @@ Preferred communication style: Simple, everyday language.
 **Type Safety**: TypeScript with strict mode enabled. Shared types and schemas are defined in `shared/schema.ts` using Zod for runtime validation.
 
 **Design System**: Custom Tailwind configuration extending the base theme with specific color variables (HSL-based), border radius values, and utility classes. The design emphasizes tabular numbers for time displays and consistent spacing primitives (2, 4, 6, 8 unit increments).
+
+**Language Support**: Multi-language support with a language selector in the footer. Currently supports 8 languages (English, Spanish, French, German, Portuguese, Italian, Japanese, Chinese) with preference stored in localStorage.
+
+**Layout System**: Reusable Layout component that provides consistent header with back-to-home navigation and footer across all tool pages. Homepage uses its own custom layout without the back button.
 
 ### Backend Architecture
 

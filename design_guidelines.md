@@ -1,184 +1,237 @@
-# Design Guidelines: Playback Speed Calculator
+# Design Guidelines: Calculator Website
 
 ## Design Approach
 
-**Selected Approach:** Design System with Calculator-Focused Patterns
+**Selected Approach:** Clean, Utility-Focused Design System
 
-**Rationale:** This is a utility-focused calculation tool where efficiency, clarity, and learnability are paramount. The interface should be clean, distraction-free, and focused on functionality. Drawing inspiration from calculator applications and productivity tools like calculator.net and specialized conversion tools.
+**Rationale:** This is a calculator and tools website where efficiency, clarity, and ease of navigation are paramount. The interface should be clean, distraction-free, and focused on helping users quickly find and use the tools they need. Drawing inspiration from utility sites like PureTables.com and calculator.net.
 
 **Key Design Principles:**
 1. Clarity over decoration - every element serves a functional purpose
-2. Immediate visual feedback for calculations
+2. Easy navigation and tool discovery
 3. Scannable information hierarchy
 4. Zero cognitive load for common tasks
+5. Consistent experience across all tools
 
 ---
 
-## Core Design Elements
+## Homepage Design
 
-### A. Typography
+### Layout Structure
 
-**Primary Font:** Inter or System UI Stack via Google Fonts
+**Hero Section:**
+- Clean title: "Calculator Tools" (text-3xl md:text-4xl font-bold)
+- Subtitle: "Calculators, tools, generators, resources." (text-lg text-muted-foreground)
+- Centered layout with max-w-6xl container
+- Minimal padding: py-12 md:py-16
+
+**Tools Grid:**
+- Responsive grid layout
+  - Mobile: 1 column (grid-cols-1)
+  - Tablet: 2 columns (sm:grid-cols-2)
+  - Desktop: 3 columns (lg:grid-cols-3)
+- Gap between cards: gap-6
+- Automatic population from tools registry
+- Category organization (Time Calculators, Math Calculators, etc.)
+
+**Tool Cards:**
+- Card component with hover-elevate interaction
+- Padding: p-6
+- Border and subtle shadow
+- Icon at top (lucide-react icons)
+- Tool name: text-lg font-semibold
+- Description: text-sm text-muted-foreground
+- Category badge: Badge component with secondary variant
+- Clickable entire card (Link wrapping)
+
+### Footer Design
+
+**Structure:**
+- Border-top separator
+- Padding: py-6 px-4
+- Two sections: Site info and Language selector
+- Responsive: Stack on mobile, flex-row on desktop
+
+**Language Selector:**
+- Dropdown select component
+- Label: "Language" (text-sm font-medium)
+- Common languages: English, Spanish, French, German, etc.
+- Icon: Globe from lucide-react
+- Position: Right side on desktop, below on mobile
+
+---
+
+## Individual Tool Pages
+
+### Layout Structure
+
+**Header:**
+- Site name/logo linking to homepage
+- Breadcrumb navigation (Home > Tool Name)
+- Consistent across all tools
+
+**Tool Content:**
+- Follows tool-specific guidelines (see below)
+- Max-width containers for readability
+- Proper spacing and hierarchy
+
+**Footer:**
+- Same footer on all pages (with language selector)
+- Consistent experience
+
+### Calculator Tool Design (Playback Speed Calculator)
+
+**Typography:**
 - Headings (H1): text-3xl font-bold (calculator title)
 - Headings (H2): text-xl font-semibold (section titles)
 - Body text: text-base font-normal
 - Labels: text-sm font-medium (form labels)
 - Numbers/Results: text-2xl font-semibold tabular-nums (calculated outputs)
 - Small text: text-xs (helper text, examples)
-
-**Special Typography Notes:**
-- Use `tabular-nums` utility for all numerical displays to maintain alignment
+- Use `tabular-nums` utility for all numerical displays
 - Monospace font for time displays (HH:MM:SS format)
 
-### B. Layout System
-
-**Spacing Primitives:** Use Tailwind units of 2, 4, 6, and 8 consistently
+**Layout System:**
+- Spacing Primitives: 2, 4, 6, and 8 units
 - Component spacing: p-4, p-6
 - Section spacing: py-8, py-12
 - Input fields: p-3
-- Gaps between elements: gap-4, gap-6
+- Gaps: gap-4, gap-6
 
 **Container Strategy:**
 - Main container: max-w-4xl mx-auto px-4
-- Calculator card: max-w-2xl (centered within main container)
+- Calculator card: max-w-2xl (centered)
 - Content sections: Full width within container
 
-**Grid System:**
-- Input fields: 3-column grid on desktop (Hours | Minutes | Seconds), stack on mobile
-- Results display: 2-column grid (Calculated Time | Time Saved)
-- Examples table: Responsive table with 3 columns
+**Component Specifications:**
+- Calculator Card: shadow-lg, rounded-xl, p-6 md:p-8, border
+- Input Fields: rounded-lg, border, p-3, text-center, tabular-nums
+- Results Display: bg-muted, rounded-lg, p-6, large text
+- Examples Table: alternating row backgrounds, responsive cards on mobile
+
+**Interaction Design:**
+- Real-time calculation (instant updates)
+- Smooth transitions (duration-200)
+- Clear focus states
+- Hover elevations on interactive elements
+- Visual validation feedback
+
+**Responsive Behavior:**
+- Mobile (< 768px): Single column, stacked layout
+- Tablet/Desktop (≥ 768px): Multi-column grids, side-by-side results
 
 ---
 
-### C. Component Library
+## Color & Visual System
 
-#### Calculator Card
-- Elevated card with subtle shadow (shadow-lg)
-- Rounded corners (rounded-xl)
-- Padding: p-6 on mobile, p-8 on desktop
-- Border treatment: border with subtle color
+**Background Hierarchy:**
+- Page background: bg-background
+- Card backgrounds: bg-card
+- Muted sections: bg-muted
+- Accent highlights: bg-accent (sparingly)
 
-#### Input Fields
-**Time Input Group:**
-- Three number inputs side-by-side (Hours, Minutes, Seconds)
-- Each input: rounded-lg, border, p-3, text-center
-- Clear labels above each input (text-sm font-medium)
-- Input width: equal distribution in grid
-- Type: number with min/max constraints
-- Font: tabular-nums for alignment
+**Text Hierarchy:**
+- Primary text: text-foreground
+- Secondary text: text-muted-foreground
+- Links: text-primary (with hover states)
+- Success indicators: text-green-600 dark:text-green-400
+- Error indicators: text-destructive
 
-**Playback Speed Input:**
-- Single number input with step="0.25"
-- Width: Full width on mobile, max-w-xs on desktop
-- Prominent placement below time inputs
-- Include common presets as suggestion chips (1.25x, 1.5x, 1.75x, 2x)
-
-#### Results Display
-**Calculated Time Box:**
-- Large, prominent display area
-- Background treatment to distinguish from inputs
-- Padding: p-6
-- Rounded: rounded-lg
-- Time format: HH:MM:SS in large text (text-3xl)
-- Label above: "Calculated Time" (text-sm font-medium)
-
-**Time Saved Indicator:**
-- Secondary result box with same styling as calculated time
-- Include positive/negative indicator with appropriate visual treatment
-- Subtitle text: "Time saved at this speed"
-
-#### Examples Table
-- Clean table design with alternating row backgrounds
-- Headers: font-semibold with bottom border
-- Cells: p-3 spacing
-- Responsive: Stack to cards on mobile viewports
-- Monospace font for time values
-
-#### Information Sections
-**How to Use:**
-- Numbered list (1, 2, 3)
-- Each step: mb-3 spacing
-- Clear, concise instructions
-
-**Math Formula:**
-- Code-style background for formula (bg-gray-50 equivalent)
-- Padding: p-4
-- Rounded: rounded-md
-- Example walkthrough with clear step-by-step breakdown
+**Borders & Shadows:**
+- Subtle borders: border with border-border
+- Card shadows: shadow-lg
+- Hover states: hover-elevate utility
 
 ---
 
-### D. Page Structure
+## Navigation & Routing
 
-**Layout Hierarchy:**
-1. **Header Section** (py-8)
-   - Page title (H1)
-   - Brief subtitle describing the tool
+**URL Structure:**
+- Homepage: `/`
+- Individual tools: `/tool-name-slug` (e.g., `/playback-speed-calculator`)
 
-2. **Calculator Section** (py-6)
-   - Calculator card containing all inputs and results
-   - Logical flow: Time Inputs → Playback Speed → Results
+**Breadcrumbs:**
+- Show current location
+- Clickable home link
+- Current page non-clickable
 
-3. **Usage Instructions** (py-8)
-   - How to use section
-   - Math formula explanation with example
-   
-4. **Examples Section** (py-8)
-   - Table showing common calculations
-   - Quick reference for users
-
-5. **Footer/Related Tools** (py-6)
-   - Links to related calculators
-   - Minimal, functional layout
+**Tool Discovery:**
+- Tools automatically appear on homepage when added to registry
+- Category-based organization
+- Search functionality (future enhancement)
 
 ---
 
-### E. Interaction Design
+## Accessibility
 
-**Real-time Calculation:**
-- Instant updates as user types (no submit button needed)
-- Smooth transition for result changes
-
-**Input Validation:**
-- Visual feedback for invalid inputs (border color change)
-- Helper text for constraints (e.g., "Enter value between 0-59")
-
-**Focus States:**
-- Clear focus rings on all interactive elements
-- Keyboard navigation support
-
-**Accessibility:**
-- Proper label associations
-- ARIA labels for screen readers
+**Standards:**
+- WCAG AA minimum color contrast
+- Proper heading hierarchy
 - Semantic HTML structure
-- Sufficient color contrast ratios (WCAG AA minimum)
+- Keyboard navigation support
+- ARIA labels for screen readers
+- Focus indicators on all interactive elements
+- Alt text for icons (aria-label)
+
+**Language Support:**
+- Language selector in footer
+- Store preference in localStorage
+- Apply to all text content (future: i18n implementation)
 
 ---
 
-### F. Responsive Behavior
+## Responsive Strategy
 
-**Mobile (< 768px):**
-- Single column layout
-- Time inputs stack vertically with full width
-- Results stack vertically
-- Table converts to card layout
+**Breakpoints:**
+- Mobile: < 640px (single column)
+- Tablet: 640px - 1024px (2 columns)
+- Desktop: ≥ 1024px (3 columns, full layouts)
 
-**Tablet/Desktop (≥ 768px):**
-- Time inputs in 3-column grid
-- Results in 2-column side-by-side
-- Table displays traditionally
-
----
-
-## Images
-
-**No hero image required.** This is a focused utility tool where visual elements would distract from functionality. Any imagery should be purely functional (icons for input types if needed).
+**Mobile-First Approach:**
+- Base styles for mobile
+- Progressive enhancement for larger screens
+- Touch-friendly targets (min 44x44px)
+- Readable text sizes (min 16px base)
 
 ---
 
-## Animation Budget
+## Performance & Optimization
 
-**Minimal animations only:**
-- Result value fade-in when calculation updates (duration-200)
-- Input focus transitions (transition-colors duration-150)
+**Images:**
+- Minimal image usage (utility-focused)
+- Icons from lucide-react (tree-shakeable)
+- No hero images unless specific tool requires
+
+**Animations:**
+- Minimal, purposeful animations
+- Smooth transitions: duration-150 to duration-200
 - No decorative animations
+- Respect prefers-reduced-motion
+
+**Code Organization:**
+- Shared components for reusability
+- Tools registry for automatic homepage population
+- Lazy loading for tool pages (future enhancement)
+
+---
+
+## Tools Registry System
+
+**Structure:**
+- Central `toolsRegistry.ts` file
+- Each tool has: id, name, description, category, path, icon
+- Categories: Time Calculators, Math Calculators, Text Tools, etc.
+- Automatic homepage card generation
+- Easy to add new tools
+
+**Example Tool Entry:**
+```typescript
+{
+  id: 'playback-speed',
+  name: 'Playback Speed Calculator',
+  description: 'Calculate video/podcast duration at different playback speeds',
+  category: 'Time Calculators',
+  path: '/playback-speed-calculator',
+  icon: Clock
+}
+```
