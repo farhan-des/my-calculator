@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, Calculator } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export interface Tool {
@@ -18,6 +18,14 @@ export const tools: Tool[] = [
     category: 'Time Calculators',
     path: '/playback-speed-calculator',
     icon: Clock,
+  },
+  {
+    id: 'lcm-calculator',
+    name: 'LCM Calculator',
+    description: 'Find the Least Common Multiple of two or more numbers using three different methods',
+    category: 'Math Calculators',
+    path: '/lcm-calculator',
+    icon: Calculator,
   },
   // Add more tools here - they will automatically appear on the homepage
 ];
