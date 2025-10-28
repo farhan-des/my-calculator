@@ -2,7 +2,11 @@
 
 ## Overview
 
-This is a multi-tool calculator website featuring various utility calculators and tools. The site has a clean homepage that automatically displays all available calculators, making it easy to add new tools. Currently includes a playback speed calculator with more tools easily added through the tools registry system. The application emphasizes clarity, ease of use, and mobile-friendly responsive design.
+This is a multi-tool calculator website featuring various utility calculators and tools. The site has a clean homepage that automatically displays all available calculators, making it easy to add new tools. Currently includes:
+- **Playback Speed Calculator** (Time Calculators category) - Calculate video/podcast duration at different speeds
+- **LCM Calculator** (Math Calculators category) - Find Least Common Multiple using three different methods
+
+The application emphasizes clarity, ease of use, and mobile-friendly responsive design. New tools are automatically added through the centralized tools registry system.
 
 ## User Preferences
 
@@ -16,7 +20,9 @@ Preferred communication style: Simple, everyday language.
 
 **Routing**: Wouter for lightweight client-side routing. The application has:
 - Homepage (`/`) - displays all available calculators from the tools registry
-- Individual tool pages (e.g., `/playback-speed-calculator`)
+- Individual tool pages:
+  - `/playback-speed-calculator` - Playback Speed Calculator
+  - `/lcm-calculator` - LCM Calculator
 - 404 fallback for unknown routes
 
 **Tools Registry System**: A centralized registry (`shared/toolsRegistry.ts`) that automatically populates the homepage with available tools. Adding a new tool only requires adding an entry to this registry, and it will automatically appear on the homepage with proper categorization.
@@ -31,7 +37,7 @@ Preferred communication style: Simple, everyday language.
 
 **Language Support**: Multi-language support with a language selector in the footer. Currently supports 8 languages (English, Spanish, French, German, Portuguese, Italian, Japanese, Chinese) with preference stored in localStorage.
 
-**Layout System**: Reusable Layout component that provides consistent header with back-to-home navigation and footer across all tool pages. Homepage uses its own custom layout without the back button.
+**Layout System**: Reusable Layout component that provides consistent header with site branding, breadcrumb navigation (showing current tool name), and footer across all tool pages. Homepage uses its own custom layout without the header navigation.
 
 ### Backend Architecture
 
@@ -45,9 +51,21 @@ Preferred communication style: Simple, everyday language.
 
 ### Calculation Logic
 
-**Client-Side Calculations**: All playback speed calculations occur in the browser using pure functions in `client/src/lib/calculations.ts`. The calculation converts time to seconds, divides by playback speed, and formats results back to HH:MM:SS format with time saved/lost indicators.
+**Client-Side Calculations**: All calculator computations occur in the browser using pure TypeScript functions for optimal performance.
 
-**Input Validation**: Zod schemas validate calculation inputs with constraints (hours: 0-999, minutes/seconds: 0-59, playback speed: 0.1-10).
+**Playback Speed Calculator** (`client/src/lib/calculations.ts`):
+- Converts time to seconds, divides by playback speed, and formats results back to HH:MM:SS format
+- Shows time saved/lost indicators
+- Input validation: Zod schemas with constraints (hours: 0-999, minutes/seconds: 0-59, playback speed: 0.1-10)
+
+**LCM Calculator** (`client/src/lib/lcmCalculations.ts`):
+- Three calculation methods with step-by-step explanations:
+  1. **Prime Factorization**: Finds prime factors, identifies highest powers, calculates LCM
+  2. **Division Method**: Creates division table with prime divisors until all quotients reach 1
+  3. **Lists of Multiples**: Generates multiples lists and identifies the smallest common multiple
+- Helper functions for GCD calculation, prime factorization, and exponential notation formatting
+- Input validation: Regex-based validation ensuring only positive whole numbers (rejects decimals, letters, negatives)
+- Requires minimum of two numbers for calculation
 
 ## External Dependencies
 
